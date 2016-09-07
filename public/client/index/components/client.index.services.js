@@ -30,6 +30,8 @@ var Input = React.createClass({
     
     getInitialState: function(){
         return {isValidated: false, content: "", isTouched: false, msg: ""}; 
+        this.handleUnfocused = this.handleUnfocused.bind(this);
+
     },
 
     handleChange : function(event) {
@@ -99,6 +101,10 @@ var LoginForm = React.createClass({
             state["inputContent"] = new Object();
             state["inputContent"][item.id] = "";
         });
+        this.updateValidateState = this.updateValidateState.bind(this);
+        this.checkValidate = this.checkValidate.bind(this);
+        this.sendFormData = this.sendFormData.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         return state;
     },
 
@@ -205,12 +211,12 @@ var LoginForm = React.createClass({
                             return (
                             <div>
                                 <h5>{item.label} </h5>
-                                <Input type={item.type}  placeholder={item.pretext} name={item.id} checkValidate={this.checkValidate.bind(this)} updateValidateState={this.updateValidateState.bind(this)}/>
+                                <Input type={item.type}  placeholder={item.pretext} name={item.id} checkValidate={this.checkValidate} updateValidateState={this.updateValidateState}/>
                                 
                             </div>);
                         })}
                          
-                        <BtSendInfo label="Send Information" formid="loginform" handleSubmit = {this.handleSubmit.bind(this)}/>
+                        <BtSendInfo label="Send Information" formid="loginform" handleSubmit = {this.handleSubmit}/>
                     </form>
                 </div>
             </div>
