@@ -18427,7 +18427,7 @@
 	                        _react2["default"].createElement(ServiceRect, { classN: "col-lg-4 col-md-4 col-sm-12 col-xs-12", imgsrc: "img/giahan.jpg", serviceName: "Làm Visa xuất cảnh", targetModal: "#gh_modal" })
 	                    )
 	                ),
-	                _react2["default"].createElement(LoginForm, { title: "Thông tin về bạn", subtitle: " Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)", items: [{ label: "tên của bạn", pretext: "Họ và tên", type: "usrName", id: "usrname", labelClass: "fa fa-user" }, { label: "số điện thoại", pretext: "Số điện thoại", type: "usrName", id: "usrsdt", labelClass: "fa fa-phone" }] }),
+	                _react2["default"].createElement(LoginForm, { title: "Thông tin về bạn", subtitle: " Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)", items: [{ label: "tên của bạn", pretext: "Họ và tên", type: "usrName", id: "usrname", labelClass: "fa fa-user" }, { label: "số điện thoại", pretext: "Số điện thoại", type: "usrSdt", id: "usrsdt", labelClass: "fa fa-phone" }] }),
 	                _react2["default"].createElement(SubmitForm, { idType: "xc_modal", label: "Dịch vụ xuất cảnh", imgSrc: "img/input-xc.jpg", items: [{ label: "QUỐC GIA", preText: "", id: "qg" }, { label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] }),
 	                _react2["default"].createElement(SubmitForm, { idType: "nc_modal", label: "Dịch vụ nhập cảnh", imgSrc: "img/input-nc.jpg", items: [{ label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] }),
 	                _react2["default"].createElement(SubmitForm, { idType: "gh_modal", label: "Dịch vụ gia hạn", imgSrc: "img/input-gh.jpg", items: [{ label: "QUỐC GIA", preText: "", id: "qg" }, { label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "XIN GIA HẠN", preText: "ngày", id: "xgh" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] })
@@ -18447,7 +18447,7 @@
 	        _get(Object.getPrototypeOf(Input.prototype), "constructor", this).call(this, props);
 	        this.state = { isValidated: false, content: "", isTouched: false, msg: "" };
 	        this.handleChange = this.handleChange.bind(this);
-	        this.handleUnfocused = this.handleUnfocused.bind(this);
+	        this.handleBlur = this.handleBlur.bind(this);
 	    }
 
 	    _createClass(Input, [{
@@ -18456,26 +18456,32 @@
 	            this.setState({ isValidated: this.state.isValidated, content: event.target.value });
 	        }
 	    }, {
-	        key: "handleUnfocused",
-	        value: function handleUnfocused() {
+	        key: "handleBlur",
+	        value: function handleBlur() {
 	            var result = this.props.checkValidate(this.props.type, this.state.content);
 	            var resultOverall = true;
-	            var returnResult;
+	            var returnResult = new Object();
 	            this.state.msg = "";
+	            var checkRequired = true;
 	            for (var key in result) {
 	                if (result.hasOwnProperty(key)) {
 	                    resultOverall = resultOverall && result[key];
 	                    if (key === "required" && result[key] === false) {
-	                        this.state.msg = "Vui lòng điền thông tin yêu cầu.";
+	                        var newState = Object.assign({}, this.state, { msg: "Vui lòng điền thông tin yêu cầu." });
+	                        checkRequired = false;
+	                        this.setState(newState);
 	                    } else {
-	                        if (result[key] === false) this.state.msg = "Vui lòng nhập thông tin chính xác.";
+	                        if (result[key] === false && checkRequired === true) {
+	                            var newState = Object.assign({}, this.state, { msg: "Vui lòng nhập thông tin chính xác." + key });
+	                            this.setState(newState);
+	                        }
 	                    }
 	                }
 	            }
 	            returnResult["validated"] = resultOverall;
 	            returnResult["content"] = this.state.content;
 	            this.props.updateValidateState(this.props.id, returnResult);
-	            this.setState({ isValidated: false, content: this.state.content });
+	            this.setState({ isValidated: result[1], content: this.state.content });
 	        }
 	    }, {
 	        key: "render",
@@ -18484,7 +18490,7 @@
 	            return _react2["default"].createElement(
 	                "div",
 	                null,
-	                _react2["default"].createElement("input", { ref: "refbutton", type: this.props.type, className: this.props["class"], placeholder: this.props.placeholder, value: this.state.content, onChange: this.handleChange, onFocusOut: this.handleUnfocused, name: this.props.name }),
+	                _react2["default"].createElement("input", { ref: "refbutton", type: this.props.type, className: this.props["class"], placeholder: this.props.placeholder, value: this.state.content, onChange: this.handleChange, onBlur: this.handleBlur, name: this.props.name }),
 	                _react2["default"].createElement("i", { className: this.props.labelClass }),
 	                _react2["default"].createElement(
 	                    "p",
@@ -18549,9 +18555,9 @@
 	        _get(Object.getPrototypeOf(LoginForm.prototype), "constructor", this).call(this, props);
 	        var state = new Object();
 	        state["serverContent"] = this.props.subtitle;
+	        state["inputContent"] = new Object();
 	        this.props.items.forEach(function (item, index) {
 	            state[item.id] = false;
-	            state["inputContent"] = new Object();
 	            state["inputContent"][item.id] = "";
 	        });
 
@@ -18586,8 +18592,9 @@
 	    }, {
 	        key: "checkValidate",
 	        value: function checkValidate(type, val) {
-	            var requirements = this.rules[key];
-	            var result;
+	            console.log("type : ", type, "val : ", val, "\n");
+	            var requirements = this.rules[type];
+	            var result = new Object();
 	            var checkRequire = function checkRequire(key, keyVal, val) {
 	                if (key === "required") {
 	                    if (val === "") {
@@ -18618,6 +18625,7 @@
 	                    result[key] = checkRequire(key, requirements[key], val);
 	                }
 	            }
+	            console.log(result);
 
 	            return result;
 	        }
@@ -18655,7 +18663,8 @@
 	            if (result === true) {
 	                sendFormData();
 	            } else {
-	                alert("Vui lòng điền thông tin yêu cầu.");
+	                //alert("Vui lòng điền thông tin yêu cầu.");
+	                //window.location = "/#services";
 	            }
 	        }
 	    }, {
@@ -18691,7 +18700,7 @@
 	                                    item.label,
 	                                    " "
 	                                ),
-	                                _react2["default"].createElement(Input, { type: item.type, placeholder: item.pretext, name: item.id, _checkValidate: _this.checkValidate, _updateValidateState: _this.updateValidateState })
+	                                _react2["default"].createElement(Input, { type: item.type, placeholder: item.pretext, name: item.id, checkValidate: _this.checkValidate, updateValidateState: _this.updateValidateState, labelClass: item.labelClass })
 	                            );
 	                        }),
 	                        _react2["default"].createElement(BtSendInfo, { label: "Send Information", formid: "loginform", handleSubmit: _this.handleSubmit })
@@ -18839,13 +18848,15 @@
 
 	    _createClass(BtSendInfo, [{
 	        key: "handleClick",
-	        value: function handleClick() {}
+	        value: function handleClick() {
+	            console.log("OK");
+	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
 	            return _react2["default"].createElement(
 	                "button",
-	                { "class": "submit", type: "submit", form: this.props.formid, formMethod: "post", id: "btsendinfo", value: "Submit", onClick: this.props.handleSubmit },
+	                { id: "btsendinfo", value: "Submit", onClick: this.props.handleSubmit },
 	                _react2["default"].createElement("i", { className: "spinner" }),
 	                _react2["default"].createElement(
 	                    "span",

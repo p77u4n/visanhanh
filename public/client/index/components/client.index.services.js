@@ -17,7 +17,7 @@ class ServiceSection extends Component {
                         <ServiceRect classN="col-lg-4 col-md-4 col-sm-12 col-xs-12" imgsrc="img/giahan.jpg" serviceName="Làm Visa xuất cảnh" targetModal="#gh_modal"/>
                     </div>
                 </div>
-                <LoginForm title="Thông tin về bạn" subtitle=" Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)" items={[{label:"tên của bạn", pretext:"Họ và tên", type:"usrName", id:"usrname", labelClass: "fa fa-user"}, {label:"số điện thoại", pretext:"Số điện thoại", type:"usrName", id:"usrsdt", labelClass: "fa fa-phone"}]}/>
+                <LoginForm title="Thông tin về bạn" subtitle=" Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)" items={[{label:"tên của bạn", pretext:"Họ và tên", type:"usrName", id:"usrname", labelClass: "fa fa-user"}, {label:"số điện thoại", pretext:"Số điện thoại", type:"usrSdt", id:"usrsdt", labelClass: "fa fa-phone"}]}/>
                 
                 <SubmitForm idType="xc_modal" label="Dịch vụ xuất cảnh" imgSrc="img/input-xc.jpg"  items={[{label: "QUỐC GIA", preText: "", id: "qg" }, {label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, {label: "SỐ LƯỢNG", preText: "", id: "sl" }]} />
                 <SubmitForm idType="nc_modal" label="Dịch vụ nhập cảnh" imgSrc="img/input-nc.jpg" items={[{label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, {label: "SỐ LƯỢNG", preText: "", id: "sl" }]} />
@@ -37,40 +37,45 @@ class Input extends Component {
         super(props);
         this.state = {isValidated: false, content: "", isTouched: false, msg: ""}; 
         this.handleChange = this.handleChange.bind(this);
-        this.handleUnfocused = this.handleUnfocused.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
     }
 
     handleChange (event) {
         this.setState({isValidated: this.state.isValidated, content: event.target.value});
     }
     
-    handleUnfocused () {
+    handleBlur () {
         var result = this.props.checkValidate(this.props.type, this.state.content);
         var resultOverall = true;
-        var returnResult;
+        var returnResult = new Object();
         this.state.msg="";
+        var checkRequired = true;
         for(var key in result) {
             if(result.hasOwnProperty(key)) {
                 resultOverall = resultOverall && result[key];
                 if(key === "required" && result[key] === false) {
-                    this.state.msg = "Vui lòng điền thông tin yêu cầu.";
+                    var newState = Object.assign({}, this.state, {msg : "Vui lòng điền thông tin yêu cầu."});
+                    checkRequired = false;
+                    this.setState(newState);
                 }else{
-                    if(result[key] === false)
-                    this.state.msg = "Vui lòng nhập thông tin chính xác.";
+                    if(result[key] === false && checkRequired ===true){
+                        var newState = Object.assign({}, this.state, {msg : "Vui lòng nhập thông tin chính xác." + key});
+                        this.setState(newState);
+                    }
                 }
             }
         }
         returnResult["validated"] = resultOverall;
         returnResult["content"] = this.state.content;
         this.props.updateValidateState(this.props.id, returnResult);
-        this.setState({isValidated: false, content: this.state.content});
+        this.setState({isValidated: result[1], content: this.state.content});
     }
 
     render() {
         var style = this.state.isValidated ? {display: 'none'} : {display : 'block'};
         return (
             <div>
-                <input ref="refbutton"  type={this.props.type} className={this.props.class} placeholder={this.props.placeholder} value={this.state.content}  onChange={this.handleChange} onFocusOut={this.handleUnfocused} name={this.props.name}/>
+                <input ref="refbutton"  type={this.props.type} className={this.props.class} placeholder={this.props.placeholder} value={this.state.content}  onChange={this.handleChange} onBlur={this.handleBlur} name={this.props.name}/>
                 <i className={this.props.labelClass}></i>
                 <p style={style}>{this.state.msg}</p>
             </div>
@@ -105,13 +110,13 @@ class LoginForm extends Component {
         super(props);
         var state = new Object();
         state["serverContent"] = this.props.subtitle;
+        state["inputContent"] = new Object();
         this.props.items.forEach( function(item, index) {
             state[item.id] = false;
-            state["inputContent"] = new Object();
             state["inputContent"][item.id] = "";
         });
-        
-        this.state = state;
+
+        this.state = state; 
         this.updateValidateState = this.updateValidateState.bind(this);
         this.checkValidate = this.checkValidate.bind(this);
         this.sendFormData = this.sendFormData.bind(this);
@@ -142,8 +147,9 @@ class LoginForm extends Component {
     
 
     checkValidate (type, val) {
-        var requirements = this.rules[key];
-        var result;
+        console.log("type : ",type, "val : ", val, "\n");
+        var requirements = this.rules[type];
+        var result = new Object();
         var checkRequire = function(key, keyVal, val) {
             if(key === "required") {
                 if(val === "") {
@@ -174,6 +180,7 @@ class LoginForm extends Component {
                 result[key] = checkRequire(key, requirements[key], val);
             }
         }
+        console.log(result);
 
         return result;
     }
@@ -209,7 +216,8 @@ class LoginForm extends Component {
         if(result === true){
             sendFormData(); 
         }else{
-            alert("Vui lòng điền thông tin yêu cầu.");
+            //alert("Vui lòng điền thông tin yêu cầu.");
+            //window.location = "/#services";
         }
     }
 
@@ -225,7 +233,7 @@ class LoginForm extends Component {
                             return (
                             <div>
                                 <h5>{item.label} </h5>
-                                <Input type={item.type}  placeholder={item.pretext} name={item.id} _checkValidate={_this.checkValidate} _updateValidateState={_this.updateValidateState}/>
+                                <Input type={item.type}  placeholder={item.pretext} name={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState} labelClass={item.labelClass}/>
                                 
                             </div>);
                         })}
@@ -315,12 +323,12 @@ class SubmitForm extends Component {
         }
 
         handleClick () {
-             
+            console.log("OK"); 
         }
 
         render () {
             return (
-                <button class="submit" type="submit" form={this.props.formid} formMethod="post" id="btsendinfo" value="Submit" onClick={this.props.handleSubmit}>
+                <button  id="btsendinfo" value="Submit" onClick={this.props.handleSubmit }>
                     <i className="spinner"></i>
                     <span className="state">{this.props.label}</span>
                 </button>
