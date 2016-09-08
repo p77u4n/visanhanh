@@ -18472,7 +18472,7 @@
 	                        this.setState(newState);
 	                    } else {
 	                        if (result[key] === false && checkRequired === true) {
-	                            var newState = Object.assign({}, this.state, { msg: "Vui lòng nhập thông tin chính xác." + key });
+	                            var newState = Object.assign({}, this.state, { msg: "Vui lòng nhập thông tin chính xác." });
 	                            this.setState(newState);
 	                        }
 	                    }
@@ -18570,13 +18570,13 @@
 	            usrName: {
 	                required: true,
 	                minlength: 2,
-	                regex: "^[\\p{L} .'-]+$"
+	                regex: "^[a-z ,.'-]+$"
 	            },
 	            usrSdt: {
 	                required: true,
 	                minlength: 7,
 	                maxlength: 11,
-	                regex: "\d+"
+	                regex: "^[0-9]+$"
 	            }
 	        };
 	    }
