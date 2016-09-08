@@ -137,6 +137,8 @@ class LoginForm extends Component {
     }
 
     updateValidateState (inputId, status) {
+        console.log("Update Parent State ", inputId);
+        console.log(status);
         let newState = Object.assign({}, this.state);
         newState[inputId] = status.validated;
         newState["inputContent"][inputId] = status.content;
@@ -233,7 +235,7 @@ class LoginForm extends Component {
                             return (
                             <div>
                                 <h5>{item.label} </h5>
-                                <Input type={item.type}  placeholder={item.pretext} name={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState} labelClass={item.labelClass}/>
+                                <Input type={item.type}  id={item.id} placeholder={item.pretext} name={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState} labelClass={item.labelClass}/>
                                 
                             </div>);
                         })}

@@ -18584,6 +18584,8 @@
 	    _createClass(LoginForm, [{
 	        key: "updateValidateState",
 	        value: function updateValidateState(inputId, status) {
+	            console.log("Update Parent State ", inputId);
+	            console.log(status);
 	            var newState = Object.assign({}, this.state);
 	            newState[inputId] = status.validated;
 	            newState["inputContent"][inputId] = status.content;
@@ -18700,7 +18702,7 @@
 	                                    item.label,
 	                                    " "
 	                                ),
-	                                _react2["default"].createElement(Input, { type: item.type, placeholder: item.pretext, name: item.id, checkValidate: _this.checkValidate, updateValidateState: _this.updateValidateState, labelClass: item.labelClass })
+	                                _react2["default"].createElement(Input, { type: item.type, id: item.id, placeholder: item.pretext, name: item.id, checkValidate: _this.checkValidate, updateValidateState: _this.updateValidateState, labelClass: item.labelClass })
 	                            );
 	                        }),
 	                        _react2["default"].createElement(BtSendInfo, { label: "Send Information", formid: "loginform", handleSubmit: _this.handleSubmit })
