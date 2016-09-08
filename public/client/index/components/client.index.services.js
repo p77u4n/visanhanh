@@ -111,8 +111,9 @@ class LoginForm extends Component {
         var state = new Object();
         state["serverContent"] = this.props.subtitle;
         state["inputContent"] = new Object();
+        state["childValidated"] = new Object();
         this.props.items.forEach( function(item, index) {
-            state[item.id] = false;
+            state["childValidated"][item.id] = false;
             state["inputContent"][item.id] = "";
         });
 
@@ -140,7 +141,7 @@ class LoginForm extends Component {
         console.log("Update Parent State ", inputId);
         console.log(status);
         let newState = Object.assign({}, this.state);
-        newState[inputId] = status.validated;
+        newState["childValidated"][inputId] = status.validated;
         newState["inputContent"][inputId] = status.content;
         this.setState(newState);
         
@@ -188,6 +189,7 @@ class LoginForm extends Component {
     }
 
     sendFormData () {
+        console.log("Send Form");
         var formData = Object.assign({}, this.state.inputContent);
         var xmlhttp = new XMLHttpRequest();
         var _this = this;
@@ -203,20 +205,30 @@ class LoginForm extends Component {
                 }
             }  
         };
-        xmlhttp.open('POST', 'send', true);
+        xmlhttp.open('POST', '', true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlhttp.send(this.requestBuildQueryString(formData));
     }
 
+    requestBuildQueryString (params) {
+        var queryString = [];
+        for(var property in params)
+            if (params.hasOwnProperty(property)) {
+                queryString.push(encodeURIComponent(property) + '=' + encodeURIComponent(params[property]));
+            }
+        return queryString.join('&');
+    }
+
     handleSubmit () {
         var result = true;
-        for(var key in this.state) {
+        for(var key in this.state.childValidated) {
             if(this.state.hasOwnProperty(key)) {
                 result = result && this.state[key];
             }
         }
+        console.log("result ",result);
         if(result === true){
-            sendFormData(); 
+            this.sendFormData(); 
         }else{
             //alert("Vui lòng điền thông tin yêu cầu.");
             //window.location = "/#services";
