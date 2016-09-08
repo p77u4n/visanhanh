@@ -109,7 +109,7 @@ class LoginForm extends Component {
     constructor (props) {
         super(props);
         var state = new Object();
-        state["serverContent"] = this.props.subtitle;
+        state["serverMsg"] = this.props.subtitle;
         state["inputContent"] = new Object();
         state["childValidated"] = new Object();
         this.props.items.forEach( function(item, index) {
@@ -222,14 +222,20 @@ class LoginForm extends Component {
     handleSubmit () {
         var result = true;
         for(var key in this.state.childValidated) {
-            if(this.state.hasOwnProperty(key)) {
-                result = result && this.state[key];
+            if(this.state.childValidated.hasOwnProperty(key)) {
+                result = result && this.state.childValidated[key];
             }
         }
         console.log("result ",result);
+        var newState = Object.assign({}, this.state, {serverMsg : "Đang xử lý ... "});
+
         if(result === true){
-            this.sendFormData(); 
+            this.setState(newState, this.sendFormData()); 
+            $('div#inputform').unblock();
         }else{
+            newState = Object.assign({}, this.state, {serverMsg : "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3"});
+            this.setState(newState);
+            
             //alert("Vui lòng điền thông tin yêu cầu.");
             //window.location = "/#services";
         }
@@ -242,7 +248,7 @@ class LoginForm extends Component {
                 <div className="iwrapper"  >
                     <form className="loginform" id="loginform" >
                         <p className="title">{this.props.title}</p>
-                        <p>{this.state.subtitle}</p>
+                        <p>{this.state.serverMsg}</p>
                         {this.props.items.map(function(item,i) {
                             return (
                             <div>
@@ -342,7 +348,7 @@ class SubmitForm extends Component {
 
         render () {
             return (
-                <button  id="btsendinfo" value="Submit" onClick={this.props.handleSubmit }>
+                <button  type="button" id="btsendinfo" value="Submit" onClick={this.props.handleSubmit }>
                     <i className="spinner"></i>
                     <span className="state">{this.props.label}</span>
                 </button>

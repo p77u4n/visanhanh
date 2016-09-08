@@ -18554,7 +18554,7 @@
 
 	        _get(Object.getPrototypeOf(LoginForm.prototype), "constructor", this).call(this, props);
 	        var state = new Object();
-	        state["serverContent"] = this.props.subtitle;
+	        state["serverMsg"] = this.props.subtitle;
 	        state["inputContent"] = new Object();
 	        state["childValidated"] = new Object();
 	        this.props.items.forEach(function (item, index) {
@@ -18669,14 +18669,20 @@
 	        value: function handleSubmit() {
 	            var result = true;
 	            for (var key in this.state.childValidated) {
-	                if (this.state.hasOwnProperty(key)) {
-	                    result = result && this.state[key];
+	                if (this.state.childValidated.hasOwnProperty(key)) {
+	                    result = result && this.state.childValidated[key];
 	                }
 	            }
 	            console.log("result ", result);
+	            var newState = Object.assign({}, this.state, { serverMsg: "Đang xử lý ... " });
+
 	            if (result === true) {
-	                this.sendFormData();
+	                this.setState(newState, this.sendFormData());
+	                $('div#inputform').unblock();
 	            } else {
+	                newState = Object.assign({}, this.state, { serverMsg: "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3" });
+	                this.setState(newState);
+
 	                //alert("Vui lòng điền thông tin yêu cầu.");
 	                //window.location = "/#services";
 	            }
@@ -18702,7 +18708,7 @@
 	                        _react2["default"].createElement(
 	                            "p",
 	                            null,
-	                            this.state.subtitle
+	                            this.state.serverMsg
 	                        ),
 	                        this.props.items.map(function (item, i) {
 	                            return _react2["default"].createElement(
@@ -18870,7 +18876,7 @@
 	        value: function render() {
 	            return _react2["default"].createElement(
 	                "button",
-	                { id: "btsendinfo", value: "Submit", onClick: this.props.handleSubmit },
+	                { type: "button", id: "btsendinfo", value: "Submit", onClick: this.props.handleSubmit },
 	                _react2["default"].createElement("i", { className: "spinner" }),
 	                _react2["default"].createElement(
 	                    "span",

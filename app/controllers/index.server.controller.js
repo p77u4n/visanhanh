@@ -8,6 +8,7 @@ exports.render = function(req, res, next) {
     next();
 };
 
-exports.printreq = function(req, res ) {
+exports.processingPOST = function(req, res ) {
     console.log(req.body);
+    res.send({status : OK});
 };
