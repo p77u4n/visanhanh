@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-var ServiceSection = React.createClass({
-    render: function() {
+class ServiceSection extends Component {
+
+    constructor(props) {
+        super(props);
+
+    }
+    render() {
         return (
             <section className="text-center" id="services">
                 <h1 className="section-heading">Dịch vụ</h1>
@@ -21,24 +26,25 @@ var ServiceSection = React.createClass({
         );
     }
 
-});
+}
 
 
 
-var Input = React.createClass({
+class Input extends Component {
     
     
-    getInitialState: function(){
-        return {isValidated: false, content: "", isTouched: false, msg: ""}; 
+    constructor(props){
+        super(props);
+        this.state = {isValidated: false, content: "", isTouched: false, msg: ""}; 
+        this.handleChange = this.handleChange.bind(this);
         this.handleUnfocused = this.handleUnfocused.bind(this);
+    }
 
-    },
-
-    handleChange : function(event) {
+    handleChange (event) {
         this.setState({isValidated: this.state.isValidated, content: event.target.value});
-    },
+    }
     
-    handleUnfocused : function() {
+    handleUnfocused () {
         var result = this.props.checkValidate(this.props.type, this.state.content);
         var resultOverall = true;
         var returnResult;
@@ -58,23 +64,25 @@ var Input = React.createClass({
         returnResult["content"] = this.state.content;
         this.props.updateValidateState(this.props.id, returnResult);
         this.setState({isValidated: false, content: this.state.content});
-    },
-    render: function() {
+    }
+
+    render() {
         var style = this.state.isValidated ? {display: 'none'} : {display : 'block'};
         return (
             <div>
-                <input ref="refbutton"  type={this.props.type} className={this.props.class} placeholder={this.props.placeholder} value={this.state.content}  onChange={this.handleUnfocused} name={this.props.name}/>
+                <input ref="refbutton"  type={this.props.type} className={this.props.class} placeholder={this.props.placeholder} value={this.state.content}  onChange={this.handleChange} onFocusOut={this.handleUnfocused} name={this.props.name}/>
                 <i className={this.props.labelClass}></i>
                 <p style={style}>{this.state.msg}</p>
             </div>
         )
     }
+}
 
-    
-});
-
-var ServiceRect = React.createClass({
-    render: function() {
+class ServiceRect extends Component{
+    constructor (props) {
+        super(props);
+    }
+    render () {
         
         return (
             <div className={this.props.classN}>
@@ -87,13 +95,14 @@ var ServiceRect = React.createClass({
                     </div>
                 </div>
             </div>
-        )
+        );
     }
-});
+}
 
-var LoginForm = React.createClass({
+class LoginForm extends Component {
     
-    getInitialState : function() {
+    constructor (props) {
+        super(props);
         var state = new Object();
         state["serverContent"] = this.props.subtitle;
         this.props.items.forEach( function(item, index) {
@@ -101,36 +110,38 @@ var LoginForm = React.createClass({
             state["inputContent"] = new Object();
             state["inputContent"][item.id] = "";
         });
+        
+        this.state = state;
         this.updateValidateState = this.updateValidateState.bind(this);
         this.checkValidate = this.checkValidate.bind(this);
         this.sendFormData = this.sendFormData.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        return state;
-    },
+        this.rules = {
+            usrName : {
+                required : true,
+                minlength : 2,
+                regex : "^[\\p{L} .'-]+$"
+            },
+            usrSdt : {
+                required : true,
+                minlength : 7,
+                maxlength : 11,
+                regex : "\d+"
+            }
+        };
+    }
 
-    updateValidateState : function(inputId, status) {
+    updateValidateState (inputId, status) {
         let newState = Object.assign({}, this.state);
         newState[inputId] = status.validated;
         newState["inputContent"][inputId] = status.content;
         this.setState(newState);
         
-    },
+    }
 
-    rules : {
-        usrName : {
-            required : true,
-            minlength : 2,
-            regex : "^[\\p{L} .'-]+$"
-        },
-        usrSdt : {
-            required : true,
-            minlength : 7,
-            maxlength : 11,
-            regex : "\d+"
-        }
-    },
+    
 
-    checkValidate : function(type, val) {
+    checkValidate (type, val) {
         var requirements = this.rules[key];
         var result;
         var checkRequire = function(key, keyVal, val) {
@@ -156,7 +167,7 @@ var LoginForm = React.createClass({
                 }
                 return false;
             }
-        };
+        }
 
         for(var key in requirements){
             if(requirements.hasOwnProperty(key)){
@@ -165,27 +176,30 @@ var LoginForm = React.createClass({
         }
 
         return result;
-    },
-    sendFormData : function() {
+    }
+
+    sendFormData () {
         var formData = Object.assign({}, this.state.inputContent);
         var xmlhttp = new XMLHttpRequest();
+        var _this = this;
         xmlhttp.onReadyStateChange = function() {
             if (xmlhttp.readyState === 4) {
                 var response = JSON.parse(xmlhttp.responseText);
                 if (xmlhttp.status === 200 && response.status === 'OK') {
-                    newState = Object.assign({}, this.state, {serverMsg : "gửi thông tin thành công"});
-                    this.setState(newState);
+                    newState = Object.assign({}, _this.state, {serverMsg : "gửi thông tin thành công"});
+                    _this.setState(newState);
                 }else{
-                    newState = Object.assign({}, this.state, {serverMsg : "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại"});
-                    this.setState(newState);
+                    newState = Object.assign({}, _this.state, {serverMsg : "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại"});
+                    _this.setState(newState);
                 }
             }  
         };
         xmlhttp.open('POST', 'send', true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlhttp.send(this.requestBuildQueryString(formData));
-    },
-    handleSubmit : function() {
+    }
+
+    handleSubmit () {
         var result = true;
         for(var key in this.state) {
             if(this.state.hasOwnProperty(key)) {
@@ -197,35 +211,38 @@ var LoginForm = React.createClass({
         }else{
             alert("Vui lòng điền thông tin yêu cầu.");
         }
-    },
+    }
 
-    render: function() {
-        
+    render () {
+        var _this = this; 
         return (
             <div id="login" className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" style={{display: 'none', cursor: 'default', backgroundColor: 'transparent'}}>
                 <div className="iwrapper"  >
-                    <form class="loginform" id="loginform" >
+                    <form className="loginform" id="loginform" >
                         <p className="title">{this.props.title}</p>
                         <p>{this.state.subtitle}</p>
                         {this.props.items.map(function(item,i) {
                             return (
                             <div>
                                 <h5>{item.label} </h5>
-                                <Input type={item.type}  placeholder={item.pretext} name={item.id} checkValidate={this.checkValidate} updateValidateState={this.updateValidateState}/>
+                                <Input type={item.type}  placeholder={item.pretext} name={item.id} _checkValidate={_this.checkValidate} _updateValidateState={_this.updateValidateState}/>
                                 
                             </div>);
                         })}
                          
-                        <BtSendInfo label="Send Information" formid="loginform" handleSubmit = {this.handleSubmit}/>
+                        <BtSendInfo label="Send Information" formid="loginform" handleSubmit = {_this.handleSubmit}/>
                     </form>
                 </div>
             </div>
-        );
+        ) ;
     }    
-});
+}
 
-var SubmitForm = React.createClass({
-    render: function() {
+class SubmitForm extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render () {
         var imgUrl = 'url(' + this.props.imgSrc + ')';
         var colSize = 12/this.props.items.length;
         var styleC = {
@@ -290,16 +307,18 @@ var SubmitForm = React.createClass({
          
             );
         }
-    });
+    }
 
-    var BtSendInfo = React.createClass({
+    class BtSendInfo extends Component{
+        constructor (props) {
+            super(props); 
+        }
 
-        
-        handleClick : function() {
+        handleClick () {
              
-        },
+        }
 
-        render: function() {
+        render () {
             return (
                 <button class="submit" type="submit" form={this.props.formid} formMethod="post" id="btsendinfo" value="Submit" onClick={this.props.handleSubmit}>
                     <i className="spinner"></i>
@@ -308,15 +327,18 @@ var SubmitForm = React.createClass({
             );
         }
 
-    });
+    }
 
-    var BtSubmit = React.createClass({
-        render: function() {
+    class BtSubmit extends Component{
+        constructor (props) {
+            super(props);
+        }
+        render () {
             return (
                 <button id="btsubmit" type="submit" form={this.props.formid} formMethod="post" >{this.props.label}</button>
             );
         }
-    }); 
+    }
 
 
 

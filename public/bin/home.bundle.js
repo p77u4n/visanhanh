@@ -18382,127 +18382,171 @@
 	    value: true
 	});
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var ServiceSection = _react2["default"].createClass({
-	    displayName: "ServiceSection",
+	var ServiceSection = (function (_Component) {
+	    _inherits(ServiceSection, _Component);
 
-	    render: function render() {
-	        return _react2["default"].createElement(
-	            "section",
-	            { className: "text-center", id: "services" },
-	            _react2["default"].createElement(
-	                "h1",
-	                { className: "section-heading" },
-	                "Dịch vụ"
-	            ),
-	            _react2["default"].createElement(
-	                "div",
-	                { className: "container", id: "inputform" },
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "row text-center", style: { marginLeft: '0px', marginRight: '0px' } },
-	                    _react2["default"].createElement(ServiceRect, { classN: "col-lg-4 col-md-4 col-sm-12 col-xs-12", imgsrc: "img/xuatcanh.jpg", serviceName: "Làm Visa xuất cảnh", targetModal: "#xc_modal" }),
-	                    _react2["default"].createElement(ServiceRect, { classN: "col-lg-4 col-md-4 col-sm-12 col-xs-12", imgsrc: "img/nhapcanh.jpg", serviceName: "Làm Visa xuất cảnh", targetModal: "#nc_modal" }),
-	                    _react2["default"].createElement(ServiceRect, { classN: "col-lg-4 col-md-4 col-sm-12 col-xs-12", imgsrc: "img/giahan.jpg", serviceName: "Làm Visa xuất cảnh", targetModal: "#gh_modal" })
-	                )
-	            ),
-	            _react2["default"].createElement(LoginForm, { title: "Thông tin về bạn", subtitle: " Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)", items: [{ label: "tên của bạn", pretext: "Họ và tên", type: "usrName", id: "usrname", labelClass: "fa fa-user" }, { label: "số điện thoại", pretext: "Số điện thoại", type: "usrName", id: "usrsdt", labelClass: "fa fa-phone" }] }),
-	            _react2["default"].createElement(SubmitForm, { idType: "xc_modal", label: "Dịch vụ xuất cảnh", imgSrc: "img/input-xc.jpg", items: [{ label: "QUỐC GIA", preText: "", id: "qg" }, { label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] }),
-	            _react2["default"].createElement(SubmitForm, { idType: "nc_modal", label: "Dịch vụ nhập cảnh", imgSrc: "img/input-nc.jpg", items: [{ label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] }),
-	            _react2["default"].createElement(SubmitForm, { idType: "gh_modal", label: "Dịch vụ gia hạn", imgSrc: "img/input-gh.jpg", items: [{ label: "QUỐC GIA", preText: "", id: "qg" }, { label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "XIN GIA HẠN", preText: "ngày", id: "xgh" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] })
-	        );
+	    function ServiceSection(props) {
+	        _classCallCheck(this, ServiceSection);
+
+	        _get(Object.getPrototypeOf(ServiceSection.prototype), "constructor", this).call(this, props);
 	    }
 
-	});
+	    _createClass(ServiceSection, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2["default"].createElement(
+	                "section",
+	                { className: "text-center", id: "services" },
+	                _react2["default"].createElement(
+	                    "h1",
+	                    { className: "section-heading" },
+	                    "Dịch vụ"
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "container", id: "inputform" },
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "row text-center", style: { marginLeft: '0px', marginRight: '0px' } },
+	                        _react2["default"].createElement(ServiceRect, { classN: "col-lg-4 col-md-4 col-sm-12 col-xs-12", imgsrc: "img/xuatcanh.jpg", serviceName: "Làm Visa xuất cảnh", targetModal: "#xc_modal" }),
+	                        _react2["default"].createElement(ServiceRect, { classN: "col-lg-4 col-md-4 col-sm-12 col-xs-12", imgsrc: "img/nhapcanh.jpg", serviceName: "Làm Visa xuất cảnh", targetModal: "#nc_modal" }),
+	                        _react2["default"].createElement(ServiceRect, { classN: "col-lg-4 col-md-4 col-sm-12 col-xs-12", imgsrc: "img/giahan.jpg", serviceName: "Làm Visa xuất cảnh", targetModal: "#gh_modal" })
+	                    )
+	                ),
+	                _react2["default"].createElement(LoginForm, { title: "Thông tin về bạn", subtitle: " Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)", items: [{ label: "tên của bạn", pretext: "Họ và tên", type: "usrName", id: "usrname", labelClass: "fa fa-user" }, { label: "số điện thoại", pretext: "Số điện thoại", type: "usrName", id: "usrsdt", labelClass: "fa fa-phone" }] }),
+	                _react2["default"].createElement(SubmitForm, { idType: "xc_modal", label: "Dịch vụ xuất cảnh", imgSrc: "img/input-xc.jpg", items: [{ label: "QUỐC GIA", preText: "", id: "qg" }, { label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] }),
+	                _react2["default"].createElement(SubmitForm, { idType: "nc_modal", label: "Dịch vụ nhập cảnh", imgSrc: "img/input-nc.jpg", items: [{ label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] }),
+	                _react2["default"].createElement(SubmitForm, { idType: "gh_modal", label: "Dịch vụ gia hạn", imgSrc: "img/input-gh.jpg", items: [{ label: "QUỐC GIA", preText: "", id: "qg" }, { label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, { label: "XIN GIA HẠN", preText: "ngày", id: "xgh" }, { label: "SỐ LƯỢNG", preText: "", id: "sl" }] })
+	            );
+	        }
+	    }]);
 
-	var Input = _react2["default"].createClass({
-	    displayName: "Input",
+	    return ServiceSection;
+	})(_react.Component);
 
-	    getInitialState: function getInitialState() {
-	        return { isValidated: false, content: "", isTouched: false, msg: "" };
-	    },
+	var Input = (function (_Component2) {
+	    _inherits(Input, _Component2);
 
-	    handleChange: function handleChange(event) {
-	        this.setState({ isValidated: this.state.isValidated, content: event.target.value });
-	    },
+	    function Input(props) {
+	        _classCallCheck(this, Input);
 
-	    handleUnfocused: function handleUnfocused() {
-	        var result = this.props.checkValidate(this.props.type, this.state.content);
-	        var resultOverall = true;
-	        var returnResult;
-	        this.state.msg = "";
-	        for (var key in result) {
-	            if (result.hasOwnProperty(key)) {
-	                resultOverall = resultOverall && result[key];
-	                if (key === "required" && result[key] === false) {
-	                    this.state.msg = "Vui lòng điền thông tin yêu cầu.";
-	                } else {
-	                    if (result[key] === false) this.state.msg = "Vui lòng nhập thông tin chính xác.";
+	        _get(Object.getPrototypeOf(Input.prototype), "constructor", this).call(this, props);
+	        this.state = { isValidated: false, content: "", isTouched: false, msg: "" };
+	        this.handleChange = this.handleChange.bind(this);
+	        this.handleUnfocused = this.handleUnfocused.bind(this);
+	    }
+
+	    _createClass(Input, [{
+	        key: "handleChange",
+	        value: function handleChange(event) {
+	            this.setState({ isValidated: this.state.isValidated, content: event.target.value });
+	        }
+	    }, {
+	        key: "handleUnfocused",
+	        value: function handleUnfocused() {
+	            var result = this.props.checkValidate(this.props.type, this.state.content);
+	            var resultOverall = true;
+	            var returnResult;
+	            this.state.msg = "";
+	            for (var key in result) {
+	                if (result.hasOwnProperty(key)) {
+	                    resultOverall = resultOverall && result[key];
+	                    if (key === "required" && result[key] === false) {
+	                        this.state.msg = "Vui lòng điền thông tin yêu cầu.";
+	                    } else {
+	                        if (result[key] === false) this.state.msg = "Vui lòng nhập thông tin chính xác.";
+	                    }
 	                }
 	            }
+	            returnResult["validated"] = resultOverall;
+	            returnResult["content"] = this.state.content;
+	            this.props.updateValidateState(this.props.id, returnResult);
+	            this.setState({ isValidated: false, content: this.state.content });
 	        }
-	        returnResult["validated"] = resultOverall;
-	        returnResult["content"] = this.state.content;
-	        this.props.updateValidateState(this.props.id, returnResult);
-	        this.setState({ isValidated: false, content: this.state.content });
-	    },
-	    render: function render() {
-	        var style = this.state.isValidated ? { display: 'none' } : { display: 'block' };
-	        return _react2["default"].createElement(
-	            "div",
-	            null,
-	            _react2["default"].createElement("input", { ref: "refbutton", type: this.props.type, className: this.props["class"], placeholder: this.props.placeholder, value: this.state.content, onChange: this.handleUnfocused, name: this.props.name }),
-	            _react2["default"].createElement("i", { className: this.props.labelClass }),
-	            _react2["default"].createElement(
-	                "p",
-	                { style: style },
-	                this.state.msg
-	            )
-	        );
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var style = this.state.isValidated ? { display: 'none' } : { display: 'block' };
+	            return _react2["default"].createElement(
+	                "div",
+	                null,
+	                _react2["default"].createElement("input", { ref: "refbutton", type: this.props.type, className: this.props["class"], placeholder: this.props.placeholder, value: this.state.content, onChange: this.handleChange, onFocusOut: this.handleUnfocused, name: this.props.name }),
+	                _react2["default"].createElement("i", { className: this.props.labelClass }),
+	                _react2["default"].createElement(
+	                    "p",
+	                    { style: style },
+	                    this.state.msg
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Input;
+	})(_react.Component);
+
+	var ServiceRect = (function (_Component3) {
+	    _inherits(ServiceRect, _Component3);
+
+	    function ServiceRect(props) {
+	        _classCallCheck(this, ServiceRect);
+
+	        _get(Object.getPrototypeOf(ServiceRect.prototype), "constructor", this).call(this, props);
 	    }
 
-	});
+	    _createClass(ServiceRect, [{
+	        key: "render",
+	        value: function render() {
 
-	var ServiceRect = _react2["default"].createClass({
-	    displayName: "ServiceRect",
-
-	    render: function render() {
-
-	        return _react2["default"].createElement(
-	            "div",
-	            { className: this.props.classN },
-	            _react2["default"].createElement(
+	            return _react2["default"].createElement(
 	                "div",
-	                { className: "hover ehover12" },
-	                _react2["default"].createElement("img", { className: "img-responsive", src: this.props.imgsrc, alt: "", style: { height: '100%', width: '100%' } }),
+	                { className: this.props.classN },
 	                _react2["default"].createElement(
 	                    "div",
-	                    { className: "overlay" },
+	                    { className: "hover ehover12" },
+	                    _react2["default"].createElement("img", { className: "img-responsive", src: this.props.imgsrc, alt: "", style: { height: '100%', width: '100%' } }),
 	                    _react2["default"].createElement(
-	                        "h2",
-	                        null,
-	                        this.props.serviceName
-	                    ),
-	                    _react2["default"].createElement(
-	                        "button",
-	                        { className: "info", "data-toggle": "modal", "data-target": this.props.targetModal },
-	                        "Đặt dịch vụ"
+	                        "div",
+	                        { className: "overlay" },
+	                        _react2["default"].createElement(
+	                            "h2",
+	                            null,
+	                            this.props.serviceName
+	                        ),
+	                        _react2["default"].createElement(
+	                            "button",
+	                            { className: "info", "data-toggle": "modal", "data-target": this.props.targetModal },
+	                            "Đặt dịch vụ"
+	                        )
 	                    )
 	                )
-	            )
-	        );
-	    }
-	});
+	            );
+	        }
+	    }]);
 
-	var LoginForm = _react2["default"].createClass({
-	    displayName: "LoginForm",
+	    return ServiceRect;
+	})(_react.Component);
 
-	    getInitialState: function getInitialState() {
+	var LoginForm = (function (_Component4) {
+	    _inherits(LoginForm, _Component4);
+
+	    function LoginForm(props) {
+	        _classCallCheck(this, LoginForm);
+
+	        _get(Object.getPrototypeOf(LoginForm.prototype), "constructor", this).call(this, props);
 	        var state = new Object();
 	        state["serverContent"] = this.props.subtitle;
 	        this.props.items.forEach(function (item, index) {
@@ -18510,284 +18554,333 @@
 	            state["inputContent"] = new Object();
 	            state["inputContent"][item.id] = "";
 	        });
-	        return state;
-	    },
 
-	    updateValidateState: function updateValidateState(inputId, status) {
-	        var newState = Object.assign({}, this.state);
-	        newState[inputId] = status.validated;
-	        newState["inputContent"][inputId] = status.content;
-	        this.setState(newState);
-	    },
-
-	    rules: {
-	        usrName: {
-	            required: true,
-	            minlength: 2,
-	            regex: "^[\\p{L} .'-]+$"
-	        },
-	        usrSdt: {
-	            required: true,
-	            minlength: 7,
-	            maxlength: 11,
-	            regex: "\d+"
-	        }
-	    },
-
-	    checkValidate: function checkValidate(type, val) {
-	        var requirements = this.rules[key];
-	        var result;
-	        var checkRequire = function checkRequire(key, keyVal, val) {
-	            if (key === "required") {
-	                if (val === "") {
-	                    return false;
-	                }
-	                return true;
-	            } else if (key === "minlength") {
-	                if (val.length < keyVal) {
-	                    return false;
-	                }
-	                return true;
-	            } else if (key === "maxlength") {
-	                if (val.length > keyVal) {
-	                    return false;
-	                }
-	                return true;
-	            } else if (key === "regex") {
-	                var reg = new RegExp(keyVal);
-	                if (reg.test(val)) {
-	                    return true;
-	                }
-	                return false;
+	        this.state = state;
+	        this.updateValidateState = this.updateValidateState.bind(this);
+	        this.checkValidate = this.checkValidate.bind(this);
+	        this.sendFormData = this.sendFormData.bind(this);
+	        this.handleSubmit = this.handleSubmit.bind(this);
+	        this.rules = {
+	            usrName: {
+	                required: true,
+	                minlength: 2,
+	                regex: "^[\\p{L} .'-]+$"
+	            },
+	            usrSdt: {
+	                required: true,
+	                minlength: 7,
+	                maxlength: 11,
+	                regex: "\d+"
 	            }
 	        };
-
-	        for (var key in requirements) {
-	            if (requirements.hasOwnProperty(key)) {
-	                result[key] = checkRequire(key, requirements[key], val);
-	            }
-	        }
-
-	        return result;
-	    },
-	    sendFormData: function sendFormData() {
-	        var formData = Object.assign({}, this.state.inputContent);
-	        var xmlhttp = new XMLHttpRequest();
-	        xmlhttp.onReadyStateChange = function () {
-	            if (xmlhttp.readyState === 4) {
-	                var response = JSON.parse(xmlhttp.responseText);
-	                if (xmlhttp.status === 200 && response.status === 'OK') {
-	                    newState = Object.assign({}, this.state, { serverMsg: "gửi thông tin thành công" });
-	                    this.setState(newState);
-	                } else {
-	                    newState = Object.assign({}, this.state, { serverMsg: "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại" });
-	                    this.setState(newState);
-	                }
-	            }
-	        };
-	        xmlhttp.open('POST', 'send', true);
-	        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	        xmlhttp.send(this.requestBuildQueryString(formData));
-	    },
-	    handleSubmit: function handleSubmit() {
-	        var result = true;
-	        for (var key in this.state) {
-	            if (this.state.hasOwnProperty(key)) {
-	                result = result && this.state[key];
-	            }
-	        }
-	        if (result === true) {
-	            sendFormData();
-	        } else {
-	            alert("Vui lòng điền thông tin yêu cầu.");
-	        }
-	    },
-
-	    render: function render() {
-
-	        return _react2["default"].createElement(
-	            "div",
-	            { id: "login", className: "col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1", style: { display: 'none', cursor: 'default', backgroundColor: 'transparent' } },
-	            _react2["default"].createElement(
-	                "div",
-	                { className: "iwrapper" },
-	                _react2["default"].createElement(
-	                    "form",
-	                    { "class": "loginform", id: "loginform" },
-	                    _react2["default"].createElement(
-	                        "p",
-	                        { className: "title" },
-	                        this.props.title
-	                    ),
-	                    _react2["default"].createElement(
-	                        "p",
-	                        null,
-	                        this.state.subtitle
-	                    ),
-	                    this.props.items.map(function (item, i) {
-	                        return _react2["default"].createElement(
-	                            "div",
-	                            null,
-	                            _react2["default"].createElement(
-	                                "h5",
-	                                null,
-	                                item.label,
-	                                " "
-	                            ),
-	                            _react2["default"].createElement(Input, { type: item.type, placeholder: item.pretext, name: item.id, checkValidate: this.checkValidate.bind(this), updateValidateState: this.updateValidateState.bind(this) })
-	                        );
-	                    }),
-	                    _react2["default"].createElement(BtSendInfo, { label: "Send Information", formid: "loginform", handleSubmit: this.handleSubmit.bind(this) })
-	                )
-	            )
-	        );
 	    }
-	});
 
-	var SubmitForm = _react2["default"].createClass({
-	    displayName: "SubmitForm",
+	    _createClass(LoginForm, [{
+	        key: "updateValidateState",
+	        value: function updateValidateState(inputId, status) {
+	            var newState = Object.assign({}, this.state);
+	            newState[inputId] = status.validated;
+	            newState["inputContent"][inputId] = status.content;
+	            this.setState(newState);
+	        }
+	    }, {
+	        key: "checkValidate",
+	        value: function checkValidate(type, val) {
+	            var requirements = this.rules[key];
+	            var result;
+	            var checkRequire = function checkRequire(key, keyVal, val) {
+	                if (key === "required") {
+	                    if (val === "") {
+	                        return false;
+	                    }
+	                    return true;
+	                } else if (key === "minlength") {
+	                    if (val.length < keyVal) {
+	                        return false;
+	                    }
+	                    return true;
+	                } else if (key === "maxlength") {
+	                    if (val.length > keyVal) {
+	                        return false;
+	                    }
+	                    return true;
+	                } else if (key === "regex") {
+	                    var reg = new RegExp(keyVal);
+	                    if (reg.test(val)) {
+	                        return true;
+	                    }
+	                    return false;
+	                }
+	            };
 
-	    render: function render() {
-	        var imgUrl = 'url(' + this.props.imgSrc + ')';
-	        var colSize = 12 / this.props.items.length;
-	        var styleC = {
-	            backgroundImage: imgUrl,
-	            backgroundSize: 'cover'
-	        };
-	        return _react2["default"].createElement(
-	            "div",
-	            { id: this.props.idType, className: "modal fade" },
-	            _react2["default"].createElement(
+	            for (var key in requirements) {
+	                if (requirements.hasOwnProperty(key)) {
+	                    result[key] = checkRequire(key, requirements[key], val);
+	                }
+	            }
+
+	            return result;
+	        }
+	    }, {
+	        key: "sendFormData",
+	        value: function sendFormData() {
+	            var formData = Object.assign({}, this.state.inputContent);
+	            var xmlhttp = new XMLHttpRequest();
+	            var _this = this;
+	            xmlhttp.onReadyStateChange = function () {
+	                if (xmlhttp.readyState === 4) {
+	                    var response = JSON.parse(xmlhttp.responseText);
+	                    if (xmlhttp.status === 200 && response.status === 'OK') {
+	                        newState = Object.assign({}, _this.state, { serverMsg: "gửi thông tin thành công" });
+	                        _this.setState(newState);
+	                    } else {
+	                        newState = Object.assign({}, _this.state, { serverMsg: "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại" });
+	                        _this.setState(newState);
+	                    }
+	                }
+	            };
+	            xmlhttp.open('POST', 'send', true);
+	            xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	            xmlhttp.send(this.requestBuildQueryString(formData));
+	        }
+	    }, {
+	        key: "handleSubmit",
+	        value: function handleSubmit() {
+	            var result = true;
+	            for (var key in this.state) {
+	                if (this.state.hasOwnProperty(key)) {
+	                    result = result && this.state[key];
+	                }
+	            }
+	            if (result === true) {
+	                sendFormData();
+	            } else {
+	                alert("Vui lòng điền thông tin yêu cầu.");
+	            }
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _this = this;
+	            return _react2["default"].createElement(
 	                "div",
-	                { className: "modal-dialog modal-lg" },
+	                { id: "login", className: "col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1", style: { display: 'none', cursor: 'default', backgroundColor: 'transparent' } },
 	                _react2["default"].createElement(
 	                    "div",
-	                    { className: "modal-content" },
+	                    { className: "iwrapper" },
 	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "modal-header" },
+	                        "form",
+	                        { className: "loginform", id: "loginform" },
 	                        _react2["default"].createElement(
-	                            "button",
-	                            { type: "button", className: "close", "data-dismiss": "modal" },
-	                            "×"
+	                            "p",
+	                            { className: "title" },
+	                            this.props.title
 	                        ),
 	                        _react2["default"].createElement(
-	                            "h4",
-	                            { className: "modal-title" },
-	                            this.props.label
-	                        )
-	                    ),
+	                            "p",
+	                            null,
+	                            this.state.subtitle
+	                        ),
+	                        this.props.items.map(function (item, i) {
+	                            return _react2["default"].createElement(
+	                                "div",
+	                                null,
+	                                _react2["default"].createElement(
+	                                    "h5",
+	                                    null,
+	                                    item.label,
+	                                    " "
+	                                ),
+	                                _react2["default"].createElement(Input, { type: item.type, placeholder: item.pretext, name: item.id, _checkValidate: _this.checkValidate, _updateValidateState: _this.updateValidateState })
+	                            );
+	                        }),
+	                        _react2["default"].createElement(BtSendInfo, { label: "Send Information", formid: "loginform", handleSubmit: _this.handleSubmit })
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return LoginForm;
+	})(_react.Component);
+
+	var SubmitForm = (function (_Component5) {
+	    _inherits(SubmitForm, _Component5);
+
+	    function SubmitForm(props) {
+	        _classCallCheck(this, SubmitForm);
+
+	        _get(Object.getPrototypeOf(SubmitForm.prototype), "constructor", this).call(this, props);
+	    }
+
+	    _createClass(SubmitForm, [{
+	        key: "render",
+	        value: function render() {
+	            var imgUrl = 'url(' + this.props.imgSrc + ')';
+	            var colSize = 12 / this.props.items.length;
+	            var styleC = {
+	                backgroundImage: imgUrl,
+	                backgroundSize: 'cover'
+	            };
+	            return _react2["default"].createElement(
+	                "div",
+	                { id: this.props.idType, className: "modal fade" },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "modal-dialog modal-lg" },
 	                    _react2["default"].createElement(
 	                        "div",
-	                        { className: "modal-body" },
+	                        { className: "modal-content" },
 	                        _react2["default"].createElement(
 	                            "div",
-	                            { className: "panel panel-default", style: { backgroundImage: imgUrl, backgroundSize: 'cover' } },
+	                            { className: "modal-header" },
+	                            _react2["default"].createElement(
+	                                "button",
+	                                { type: "button", className: "close", "data-dismiss": "modal" },
+	                                "×"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "h4",
+	                                { className: "modal-title" },
+	                                this.props.label
+	                            )
+	                        ),
+	                        _react2["default"].createElement(
+	                            "div",
+	                            { className: "modal-body" },
 	                            _react2["default"].createElement(
 	                                "div",
-	                                { className: "panel-body" },
+	                                { className: "panel panel-default", style: { backgroundImage: imgUrl, backgroundSize: 'cover' } },
 	                                _react2["default"].createElement(
-	                                    "form",
-	                                    { "class": "submitform", id: "submitform", className: "row text-center" },
-	                                    this.props.items.map(function (item, i) {
-	                                        var colType = "col-lg-" + colSize + " col-md-" + colSize + " col-sm-12 col-xs-12";
-	                                        if (item.label === "QUỐC GIA") {
-	                                            return _react2["default"].createElement(
-	                                                "div",
-	                                                { className: colType, style: { height: '150px' } },
-	                                                _react2["default"].createElement(
-	                                                    "h3",
-	                                                    null,
-	                                                    "QUỐC GIA"
-	                                                ),
-	                                                _react2["default"].createElement(
-	                                                    "div",
-	                                                    { id: "input-ahead" },
-	                                                    _react2["default"].createElement("input", { className: "type-ahead form-control", type: "text", placeholder: item.preText, name: item.id })
-	                                                )
-	                                            );
-	                                        } else {
-	                                            return _react2["default"].createElement(
-	                                                "div",
-	                                                { className: colType, style: { height: '150px' } },
-	                                                _react2["default"].createElement(
-	                                                    "h3",
-	                                                    null,
-	                                                    item.label
-	                                                ),
-	                                                _react2["default"].createElement("input", { className: "form-control", type: "text", placeholder: item.preText, name: item.id })
-	                                            );
-	                                        }
-	                                    }),
+	                                    "div",
+	                                    { className: "panel-body" },
 	                                    _react2["default"].createElement(
-	                                        "div",
-	                                        { className: "text-center" },
-	                                        _react2["default"].createElement(BtSubmit, { label: "đăng ký", form: "submitform" })
+	                                        "form",
+	                                        { "class": "submitform", id: "submitform", className: "row text-center" },
+	                                        this.props.items.map(function (item, i) {
+	                                            var colType = "col-lg-" + colSize + " col-md-" + colSize + " col-sm-12 col-xs-12";
+	                                            if (item.label === "QUỐC GIA") {
+	                                                return _react2["default"].createElement(
+	                                                    "div",
+	                                                    { className: colType, style: { height: '150px' } },
+	                                                    _react2["default"].createElement(
+	                                                        "h3",
+	                                                        null,
+	                                                        "QUỐC GIA"
+	                                                    ),
+	                                                    _react2["default"].createElement(
+	                                                        "div",
+	                                                        { id: "input-ahead" },
+	                                                        _react2["default"].createElement("input", { className: "type-ahead form-control", type: "text", placeholder: item.preText, name: item.id })
+	                                                    )
+	                                                );
+	                                            } else {
+	                                                return _react2["default"].createElement(
+	                                                    "div",
+	                                                    { className: colType, style: { height: '150px' } },
+	                                                    _react2["default"].createElement(
+	                                                        "h3",
+	                                                        null,
+	                                                        item.label
+	                                                    ),
+	                                                    _react2["default"].createElement("input", { className: "form-control", type: "text", placeholder: item.preText, name: item.id })
+	                                                );
+	                                            }
+	                                        }),
+	                                        _react2["default"].createElement(
+	                                            "div",
+	                                            { className: "text-center" },
+	                                            _react2["default"].createElement(BtSubmit, { label: "đăng ký", form: "submitform" })
+	                                        )
 	                                    )
+	                                )
+	                            ),
+	                            _react2["default"].createElement(
+	                                "div",
+	                                { className: "panel panel-success" },
+	                                _react2["default"].createElement(
+	                                    "div",
+	                                    { className: "panel-heading" },
+	                                    "Tài liệu cần có"
+	                                ),
+	                                _react2["default"].createElement(
+	                                    "div",
+	                                    { className: "pane-body", style: { maxHeight: '10', overflowY: 'scroll' } },
+	                                    " Panel Content"
 	                                )
 	                            )
 	                        ),
 	                        _react2["default"].createElement(
 	                            "div",
-	                            { className: "panel panel-success" },
+	                            { className: "modal-footer ", style: { textAlign: 'center' } },
 	                            _react2["default"].createElement(
-	                                "div",
-	                                { className: "panel-heading" },
-	                                "Tài liệu cần có"
-	                            ),
-	                            _react2["default"].createElement(
-	                                "div",
-	                                { className: "pane-body", style: { maxHeight: '10', overflowY: 'scroll' } },
-	                                " Panel Content"
+	                                "button",
+	                                { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
+	                                "Đóng"
 	                            )
-	                        )
-	                    ),
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "modal-footer ", style: { textAlign: 'center' } },
-	                        _react2["default"].createElement(
-	                            "button",
-	                            { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
-	                            "Đóng"
 	                        )
 	                    )
 	                )
-	            )
-	        );
+	            );
+	        }
+	    }]);
+
+	    return SubmitForm;
+	})(_react.Component);
+
+	var BtSendInfo = (function (_Component6) {
+	    _inherits(BtSendInfo, _Component6);
+
+	    function BtSendInfo(props) {
+	        _classCallCheck(this, BtSendInfo);
+
+	        _get(Object.getPrototypeOf(BtSendInfo.prototype), "constructor", this).call(this, props);
 	    }
-	});
 
-	var BtSendInfo = _react2["default"].createClass({
-	    displayName: "BtSendInfo",
+	    _createClass(BtSendInfo, [{
+	        key: "handleClick",
+	        value: function handleClick() {}
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2["default"].createElement(
+	                "button",
+	                { "class": "submit", type: "submit", form: this.props.formid, formMethod: "post", id: "btsendinfo", value: "Submit", onClick: this.props.handleSubmit },
+	                _react2["default"].createElement("i", { className: "spinner" }),
+	                _react2["default"].createElement(
+	                    "span",
+	                    { className: "state" },
+	                    this.props.label
+	                )
+	            );
+	        }
+	    }]);
 
-	    handleClick: function handleClick() {},
+	    return BtSendInfo;
+	})(_react.Component);
 
-	    render: function render() {
-	        return _react2["default"].createElement(
-	            "button",
-	            { "class": "submit", type: "submit", form: this.props.formid, formMethod: "post", id: "btsendinfo", value: "Submit", onClick: this.props.handleSubmit },
-	            _react2["default"].createElement("i", { className: "spinner" }),
-	            _react2["default"].createElement(
-	                "span",
-	                { className: "state" },
+	var BtSubmit = (function (_Component7) {
+	    _inherits(BtSubmit, _Component7);
+
+	    function BtSubmit(props) {
+	        _classCallCheck(this, BtSubmit);
+
+	        _get(Object.getPrototypeOf(BtSubmit.prototype), "constructor", this).call(this, props);
+	    }
+
+	    _createClass(BtSubmit, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2["default"].createElement(
+	                "button",
+	                { id: "btsubmit", type: "submit", form: this.props.formid, formMethod: "post" },
 	                this.props.label
-	            )
-	        );
-	    }
+	            );
+	        }
+	    }]);
 
-	});
-
-	var BtSubmit = _react2["default"].createClass({
-	    displayName: "BtSubmit",
-
-	    render: function render() {
-	        return _react2["default"].createElement(
-	            "button",
-	            { id: "btsubmit", type: "submit", form: this.props.formid, formMethod: "post" },
-	            this.props.label
-	        );
-	    }
-	});
+	    return BtSubmit;
+	})(_react.Component);
 
 	exports["default"] = ServiceSection;
 	module.exports = exports["default"];
