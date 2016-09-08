@@ -10,5 +10,5 @@ exports.render = function(req, res, next) {
 
 exports.processingPOST = function(req, res ) {
     console.log(req.body);
-    res.send({status : OK});
+    res.send({status : 'OK'});
 };

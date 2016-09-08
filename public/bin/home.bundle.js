@@ -18639,14 +18639,19 @@
 	            var formData = Object.assign({}, this.state.inputContent);
 	            var xmlhttp = new XMLHttpRequest();
 	            var _this = this;
-	            xmlhttp.onReadyStateChange = function () {
+
+	            xmlhttp.onreadystatechange = function () {
 	                if (xmlhttp.readyState === 4) {
 	                    var response = JSON.parse(xmlhttp.responseText);
 	                    if (xmlhttp.status === 200 && response.status === 'OK') {
-	                        newState = Object.assign({}, _this.state, { serverMsg: "gửi thông tin thành công" });
+	                        console.log("Gui thong tin thanh cong");
+	                        var newState = Object.assign({}, _this.state, { serverMsg: "gửi thông tin thành công" });
 	                        _this.setState(newState);
+	                        setTimeout(function () {
+	                            $('div#inputform').unblock();
+	                        }, 1000);
 	                    } else {
-	                        newState = Object.assign({}, _this.state, { serverMsg: "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại" });
+	                        var newState = Object.assign({}, _this.state, { serverMsg: "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại" });
 	                        _this.setState(newState);
 	                    }
 	                }
@@ -18678,7 +18683,6 @@
 
 	            if (result === true) {
 	                this.setState(newState, this.sendFormData());
-	                $('div#inputform').unblock();
 	            } else {
 	                newState = Object.assign({}, this.state, { serverMsg: "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3" });
 	                this.setState(newState);
