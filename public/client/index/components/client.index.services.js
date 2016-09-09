@@ -212,7 +212,7 @@ class LoginForm extends Component {
                 }
             }  
         };
-        xmlhttp.open('POST', '', true);
+        xmlhttp.open('POST', '/customers/', true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlhttp.send(this.requestBuildQueryString(formData));
     }

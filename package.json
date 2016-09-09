@@ -3,24 +3,24 @@
   "version": "0.0.1",
   "description": "App Web for Visa Nhanh",
   "devDependencies": {
-    "babel-core": "^5.8.*",
-    "babel-loader": "^5.3.*",
-    "webpack": "^1.12.*",
-    "webpack-dev-server": "^1.10.*"
+    "babel-core": "*",
+    "babel-loader": "*",
+    "webpack": "*",
+    "webpack-dev-server": "*"
   },
   "dependencies": {
-    "babel-core": "^5.8.38",
-    "babel-loader": "^5.4.2",
-    "babel-preset-react": "^6.11.1",
-    "body-parser": "~1.8.0",
-    "compression": "~1.0.11",
-    "ejs": "~1.0.0",
-    "express": "~4.11.0",
-    "express-session": "~1.7.6",
-    "method-override": "~2.2.0",
-    "mongoose": "~3.8.23",
-    "react": "^0.13.3",
-    "react-dom": "^15.3.1",
-    "winston": "^2.2.0"
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-react": "*",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "method-override": "^2.3.6",
+    "mongoose": "*",
+    "react": "*",
+    "react-dom": "*",
+    "winston": "*"
   }
 }
