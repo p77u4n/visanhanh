@@ -5,8 +5,9 @@ var CustomerSchema = new Schema({
     usrname: String,
     usrsdt: String
 }, {strict: false});
-
+CustomerSchema.index({usrsdt : 1},{unique: true});
 mongoose.model('Customer', CustomerSchema);
+
 
 //test
 

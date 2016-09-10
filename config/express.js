@@ -2,7 +2,9 @@ var config = require('./config'),
     express = require('express'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
-    session = require('express-session');
+    session = require('express-session'),
+    redisStore = require('connect-redis')(session),
+    genuuid = require('uid-safe');
 
 module.exports = function() {
     var app = express();
@@ -23,7 +25,9 @@ module.exports = function() {
     app.use(session({
         saveUninitialized: true,
         resave: true,
-        secret: config.sessionSecret
+        secret: config.sessionSecret,
+        cookie: {secure : config.sessionSecure},
+        
     }));
     
     app.set('views', './app/views');

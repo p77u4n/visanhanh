@@ -9,7 +9,7 @@ exports.create = function(req, res ) {
             console.log("err");
             throw err;
         } else {
-            res.json(customer);
+            res.send({status : 'OK'});
             console.log("Done add customer info ",req.body);
         }
     });

@@ -21,6 +21,7 @@
     "mongoose": "*",
     "react": "*",
     "react-dom": "*",
-    "winston": "*"
+    "winston": "*",
+    "connect-redis": "*"
   }
 }
