@@ -10,5 +10,6 @@ module.exports = function() {
         console.log("DB are connected");
     })
     require('../app/models/customers.server.model');
-    return db;
+    return { database: db, mongooseIns: mongoose };
 };
+

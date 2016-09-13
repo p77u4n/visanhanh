@@ -3,7 +3,7 @@ exports.render = function(req, res, next) {
         console.log(req.session.lastVisit);
     }
     req.session.lastVisit = new Date();
-    console.log(req);
+        
     res.render('index');
     next();
 };

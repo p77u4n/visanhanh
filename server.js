@@ -3,10 +3,11 @@ express = require('./config/express');
 mongoose = require('./config/mongoose');
 
 
-var db = mongoose();
-var app = express();
+var dbInfo = mongoose();
+var db = dbInfo.database;
+
+var app = express(dbInfo.mongooseIns);
 
 app.listen(80);
 
 console.log('Server running at http://ip:80/');
-var mongoose = require('./config/mongoose');

@@ -4,9 +4,9 @@ var config = require('./config'),
     methodOverride = require('method-override'),
     session = require('express-session'),
     redisStore = require('connect-redis')(session),
-    genuuid = require('uid-safe');
-
-module.exports = function() {
+    genuuid = require('uid-safe'),
+    MongoStore = require('connect-mongo')(session);
+module.exports = function(mongoose) {
     var app = express();
 
     if (process.env.NODE_ENV === 'development') {
@@ -27,7 +27,7 @@ module.exports = function() {
         resave: true,
         secret: config.sessionSecret,
         cookie: {secure : config.sessionSecure},
-        
+        store: new MongoStore({mongooseConnection : mongoose.connection}) 
     }));
     
     app.set('views', './app/views');
@@ -35,7 +35,7 @@ module.exports = function() {
 
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/customers.server.routes.js')(app); 
-
+    require('../app/routes/session.server.routes.js')(app);
     app.use(express.static('./public'));
     return app;
 };

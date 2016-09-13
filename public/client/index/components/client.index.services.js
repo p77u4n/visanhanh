@@ -4,9 +4,10 @@ class ServiceSection extends Component {
 
     constructor(props) {
         super(props);
-
+        
     }
     render() {
+        
         return (
             <section className="text-center" id="services">
                 <h1 className="section-heading">Dịch vụ</h1>
@@ -17,8 +18,8 @@ class ServiceSection extends Component {
                         <ServiceRect classN="col-lg-4 col-md-4 col-sm-12 col-xs-12" imgsrc="img/giahan.jpg" serviceName="Làm Visa xuất cảnh" targetModal="#gh_modal"/>
                     </div>
                 </div>
-                <LoginForm title="Thông tin về bạn" subtitle=" Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)" items={[{label:"tên của bạn", pretext:"Họ và tên", type:"usrName", id:"usrname", labelClass: "fa fa-user"}, {label:"số điện thoại", pretext:"Số điện thoại", type:"usrSdt", id:"usrsdt", labelClass: "fa fa-phone"}]}/>
-                
+                <LoginForm prevSession={this.props.prevSession} title="Thông tin về bạn" subtitle=" Để đăng ký dịch vụ, vui lòng cung cấp các thông tin dưới đây, xin cảm ơn :)" items={[{label:"tên của bạn", pretext:"Họ và tên", type:"usrName", id:"usrname", labelClass: "fa fa-user"}, {label:"số điện thoại", pretext:"Số điện thoại", type:"usrSdt", id:"usrsdt", labelClass: "fa fa-phone"}]}/>
+
                 <SubmitForm idType="xc_modal" label="Dịch vụ xuất cảnh" imgSrc="img/input-xc.jpg"  items={[{label: "QUỐC GIA", preText: "", id: "qg" }, {label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, {label: "SỐ LƯỢNG", preText: "", id: "sl" }]} />
                 <SubmitForm idType="nc_modal" label="Dịch vụ nhập cảnh" imgSrc="img/input-nc.jpg" items={[{label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" }, {label: "SỐ LƯỢNG", preText: "", id: "sl" }]} />
                 <SubmitForm idType="gh_modal" label="Dịch vụ gia hạn" imgSrc="img/input-gh.jpg" items={[{label: "QUỐC GIA", preText: "", id: "qg" },{label: "THỜI GIAN CHỜ", preText: "ngày", id: "tgc" },{label: "XIN GIA HẠN", preText: "ngày", id: "xgh" }, {label: "SỐ LƯỢNG", preText: "", id: "sl" }]} />
@@ -109,6 +110,7 @@ class LoginForm extends Component {
     constructor (props) {
         super(props);
         var state = new Object();
+        
         state["serverMsg"] = this.props.subtitle;
         state["inputContent"] = new Object();
         state["childValidated"] = new Object();
@@ -242,6 +244,7 @@ class LoginForm extends Component {
             newState = Object.assign({}, this.state, {serverMsg : "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3"});
             this.setState(newState);
             
+            console.log(document.cookie);
             //alert("Vui lòng điền thông tin yêu cầu.");
             //window.location = "/#services";
         }
@@ -249,22 +252,49 @@ class LoginForm extends Component {
 
     render () {
         var _this = this; 
+         
+        if(this.props.prevSession.content) {
+            console.log("Input Form render notice : render prevSession");
+            var Content = (
+                <div>
+                <p className="title">sử dụng thông tin ở giao dịch trước</p>
+                <p>Thông tin giao dịch trước của bạn</p>
+                    <div>
+                        <h5>Tên của bạn</h5>
+                        <h6>{this.props.prevSession.content.usrname}</h6>
+                    </div>
+                    <div>
+                        <h5>Số điện thoại</h5>
+                        <h6>{this.props.prevSession.content.usrsdt}</h6>
+                    </div>
+                    <BtSendInfo label="sử dụng lại" formid="loginform" handleSubmit = {this.handleSubmit}/>
+                    <h5><a>Ấn vào đây nếu bạn muốn nhập thông tin mới</a></h5>
+                </div>
+            );
+        }else{
+            var Content = (
+                <div>
+                    <p className="title">{this.props.title}</p>
+                    <p>{this.state.serverMsg}</p>
+                     {this.props.items.map(function(item,i) {
+                        return (
+                            <div>
+                                <h5>{item.label} </h5>
+                                <Input type={item.type}  id={item.id} placeholder={item.pretext} name={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState} labelClass={item.labelClass}/>
+                                    
+                            </div>);
+                    })}
+                     <BtSendInfo label="" formid="loginform" handleSubmit = {this.handleSubmit}/>
+                    
+                </div>
+                    );
+
+        }
         return (
             <div id="login" className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" style={{display: 'none', cursor: 'default', backgroundColor: 'transparent'}}>
                 <div className="iwrapper"  >
                     <form className="loginform" id="loginform" >
-                        <p className="title">{this.props.title}</p>
-                        <p>{this.state.serverMsg}</p>
-                        {this.props.items.map(function(item,i) {
-                            return (
-                            <div>
-                                <h5>{item.label} </h5>
-                                <Input type={item.type}  id={item.id} placeholder={item.pretext} name={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState} labelClass={item.labelClass}/>
-                                
-                            </div>);
-                        })}
-                         
-                        <BtSendInfo label="Send Information" formid="loginform" handleSubmit = {_this.handleSubmit}/>
+                        {Content}
                     </form>
                 </div>
             </div>
@@ -294,7 +324,7 @@ class SubmitForm extends Component {
                         <div className="modal-body">
                             <div className="panel panel-default" style={{backgroundImage: imgUrl, backgroundSize: 'cover'}}>
                                 <div className="panel-body">
-                                    <form class="submitform" id="submitform" className="row text-center">
+                                    <form className="submitform" id="submitform" className="row text-center">
                                         {this.props.items.map(function(item, i){
                                             var colType = "col-lg-" + colSize + " col-md-" + colSize + " col-sm-12 col-xs-12"
                                             if(item.label === "QUỐC GIA") {

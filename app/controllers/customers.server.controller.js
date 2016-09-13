@@ -10,7 +10,18 @@ exports.create = function(req, res ) {
             throw err;
         } else {
             res.send({status : 'OK'});
+            req.session.customerInfo = new Object();
+            req.session.customerInfo.usrname = customer.usrname;
+            req.session.customerInfo.usrsdt = customer.usrsdt;
+            req.session.save(function(err) {
+                if(err) {
+                    console.log("SessionStore Warning : Cannot store");
+                }else {
+                    console.log("SessionStore Notice : Store OK");
+                }
+            })
             console.log("Done add customer info ",req.body);
+            console.log(req.session);
         }
     });
 };
