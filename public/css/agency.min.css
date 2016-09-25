@@ -811,3 +811,15 @@ legend {
 .iwrapper textarea {
     overflow: auto
 }
+
+.inforbox {
+    margin : 5px;
+    border: 1px solid #c0c0c0;
+
+}
+
+.inforbox .inforbox-title {
+    background-color : green;
+}
+
+

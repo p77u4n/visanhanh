@@ -265,7 +265,16 @@
             var myElement = document.getElementById("services");
 
             var elementWatcher = scrollMonitor.create(myElement);
+            $('div#inputform').block({
+                    message: $('#login'),
+                    css: {
 
+                        height: '110%',
+                        width: '100%',
+                        background: 'rgba(0,0,0,0.5)'
+                    }
+            });
+            /*
             elementWatcher.enterViewport(function() {
                 console.log('I have entered the viewport');
                 $('div#inputform').block({
@@ -283,6 +292,7 @@
                 $('div#inputform').unblock();
                 console.log('welcome to input form');
             });
+            */
         });
     </script>
     

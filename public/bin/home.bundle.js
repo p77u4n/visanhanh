@@ -101,7 +101,7 @@
 	                    var response = JSON.parse(xmlhttp.responseText);
 	                    if (xmlhttp.status === 200 && response.status === 'OK') {
 	                        _this.setState({ prevSession: { content: response.session.customerInfo } });
-	                        console.log("Session Retrieving Notice : familiar Session ", _this.state.prevSession);
+	                        console.log("Session Retrieving Notice : familiar Session ", _this.state.prevSession.content);
 	                    } else if (xmlhttp.status === 200 && response.status === 'NONE') {
 	                        _this.setState({ prevSession: { content: null } });
 	                        console.log("Session Retrieving Warning : new come Session");
@@ -21754,12 +21754,15 @@
 	            state["childValidated"][item.id] = false;
 	            state["inputContent"][item.id] = "";
 	        });
+	        state["reuseInfo"] = false;
 
 	        _this5.state = state;
 	        _this5.updateValidateState = _this5.updateValidateState.bind(_this5);
 	        _this5.checkValidate = _this5.checkValidate.bind(_this5);
 	        _this5.sendFormData = _this5.sendFormData.bind(_this5);
 	        _this5.handleSubmit = _this5.handleSubmit.bind(_this5);
+	        _this5.handleReSubmit = _this5.handleReSubmit.bind(_this5);
+	        _this5.handleNewSubmit = _this5.handleNewSubmit.bind(_this5);
 	        _this5.rules = {
 	            usrName: {
 	                required: true,
@@ -21777,6 +21780,24 @@
 	    }
 
 	    _createClass(LoginForm, [{
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps(nextProps) {
+	            console.log("Login Form log : Props update from father");
+	            console.log(nextProps.prevSession.content);
+	            if (nextProps.prevSession.content) {
+	                var newState = Object.assign({}, this.state, { reuseInfo: true });
+	                this.setState(newState);
+	            } else {
+	                var newState = Object.assign({}, this.state, { reuseInfo: false });
+	                this.setState(newState);
+	            }
+	        }
+	    }, {
+	        key: "shouldComponentUpdate",
+	        value: function shouldComponentUpdate() {
+	            return true;
+	        }
+	    }, {
 	        key: "updateValidateState",
 	        value: function updateValidateState(inputId, status) {
 	            console.log("Update Parent State ", inputId);
@@ -21829,7 +21850,7 @@
 	    }, {
 	        key: "sendFormData",
 	        value: function sendFormData() {
-	            console.log("Send Form");
+	            console.log("LoginForm : Send Form");
 	            var formData = Object.assign({}, this.state.inputContent);
 	            var xmlhttp = new XMLHttpRequest();
 	            var _this = this;
@@ -21882,17 +21903,33 @@
 	                newState = Object.assign({}, this.state, { serverMsg: "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3" });
 	                this.setState(newState);
 
-	                console.log(document.cookie);
+	                //console.log(document.cookie);
 	                //alert("Vui lòng điền thông tin yêu cầu.");
 	                //window.location = "/#services";
 	            }
+	        }
+	    }, {
+	        key: "handleReSubmit",
+	        value: function handleReSubmit() {
+	            var newState = Object.assign({}, this.state, { inputContent: { usrname: this.props.prevSession.content.usrname, usrsdt: this.props.prevSession.content.usrsdt } });
+	            this.setState(newState);
+	            setTimeout(function () {
+	                $('div#inputform').unblock();
+	            }, 1000);
+	            console.log("Submit previous session : OK");
+	        }
+	    }, {
+	        key: "handleNewSubmit",
+	        value: function handleNewSubmit() {
+	            var newState = Object.assign({}, this.state, { reuseInfo: false });
+	            this.setState(newState);
 	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
 	            var _this = this;
 
-	            if (this.props.prevSession.content) {
+	            if (this.state.reuseInfo === true) {
 	                console.log("Input Form render notice : render prevSession");
 	                var Content = _react2.default.createElement(
 	                    "div",
@@ -21903,45 +21940,49 @@
 	                        "sử dụng thông tin ở giao dịch trước"
 	                    ),
 	                    _react2.default.createElement(
-	                        "p",
-	                        null,
-	                        "Thông tin giao dịch trước của bạn"
-	                    ),
-	                    _react2.default.createElement(
 	                        "div",
-	                        null,
+	                        { className: "inforbox" },
 	                        _react2.default.createElement(
-	                            "h5",
-	                            null,
-	                            "Tên của bạn"
+	                            "p",
+	                            { className: "inforbox-title" },
+	                            "Thông tin giao dịch trước của bạn"
 	                        ),
 	                        _react2.default.createElement(
-	                            "h6",
+	                            "div",
 	                            null,
-	                            this.props.prevSession.content.usrname
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "div",
-	                        null,
-	                        _react2.default.createElement(
-	                            "h5",
-	                            null,
-	                            "Số điện thoại"
+	                            _react2.default.createElement(
+	                                "h5",
+	                                null,
+	                                "Tên của bạn"
+	                            ),
+	                            _react2.default.createElement(
+	                                "p",
+	                                null,
+	                                this.props.prevSession.content.usrname
+	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            "h6",
+	                            "div",
 	                            null,
-	                            this.props.prevSession.content.usrsdt
+	                            _react2.default.createElement(
+	                                "h5",
+	                                null,
+	                                "Số điện thoại"
+	                            ),
+	                            _react2.default.createElement(
+	                                "p",
+	                                null,
+	                                this.props.prevSession.content.usrsdt
+	                            )
 	                        )
 	                    ),
-	                    _react2.default.createElement(BtSendInfo, { label: "sử dụng lại", formid: "loginform", handleSubmit: this.handleSubmit }),
+	                    _react2.default.createElement(BtSendInfo, { label: "Sử dụng lại", formid: "loginform", handleSubmit: this.handleReSubmit }),
 	                    _react2.default.createElement(
 	                        "h5",
 	                        null,
 	                        _react2.default.createElement(
 	                            "a",
-	                            null,
+	                            { onClick: this.handleNewSubmit },
 	                            "Ấn vào đây nếu bạn muốn nhập thông tin mới"
 	                        )
 	                    )
@@ -21973,7 +22014,7 @@
 	                            _react2.default.createElement(Input, { type: item.type, id: item.id, placeholder: item.pretext, name: item.id, checkValidate: _this.checkValidate, updateValidateState: _this.updateValidateState, labelClass: item.labelClass })
 	                        );
 	                    }),
-	                    _react2.default.createElement(BtSendInfo, { label: "", formid: "loginform", handleSubmit: this.handleSubmit })
+	                    _react2.default.createElement(BtSendInfo, { label: "Gửi thông tin", formid: "loginform", handleSubmit: this.handleSubmit })
 	                );
 	            }
 	            return _react2.default.createElement(
@@ -22001,10 +22042,155 @@
 	    function SubmitForm(props) {
 	        _classCallCheck(this, SubmitForm);
 
-	        return _possibleConstructorReturn(this, (SubmitForm.__proto__ || Object.getPrototypeOf(SubmitForm)).call(this, props));
+	        var _this6 = _possibleConstructorReturn(this, (SubmitForm.__proto__ || Object.getPrototypeOf(SubmitForm)).call(this, props));
+
+	        _this6.updateValidateState = _this6.updateValidateState.bind(_this6);
+	        _this6.checkValidate = _this6.checkValidate.bind(_this6);
+	        _this6.sendFormData = _this6.sendFormData.bind(_this6);
+	        _this6.handleSubmit = _this6.handleSubmit.bind(_this6);
+	        var state = { inputContent: {}, childValidated: {} };
+
+	        _this6.props.items.forEach(function (item, index) {
+	            state["childValidated"][item.id] = false;
+	            state["inputContent"][item.id] = "";
+	        });
+
+	        _this6.state = state;
+	        _this6.rules = {
+	            tgc: {
+	                required: true,
+	                regex: "^[0-9]+$"
+	            },
+	            qg: {
+	                required: true,
+	                minlength: 3,
+	                regex: "^[a-z ,.'-]+$"
+	            },
+	            sl: {
+	                required: true,
+	                regex: "^[0-9]+$"
+	            },
+	            xgh: {
+	                maxlength: 2,
+	                required: true,
+	                regex: "^[0-9]+$"
+	            }
+	        };
+	        return _this6;
 	    }
 
 	    _createClass(SubmitForm, [{
+	        key: "updateValidateState",
+	        value: function updateValidateState(inputId, status) {
+	            console.log("SubmitForm : Update Parent State ", inputId);
+	            console.log(status);
+	            var newState = Object.assign({}, this.state);
+	            newState["childValidated"][inputId] = status.validated;
+	            newState["inputContent"][inputId] = status.content;
+	            this.setState(newState);
+	        }
+	    }, {
+	        key: "checkValidate",
+	        value: function checkValidate(type, val) {
+	            console.log("type : ", type, "val : ", val, "\n");
+	            var requirements = this.rules[type];
+	            var result = new Object();
+	            var checkRequire = function checkRequire(key, keyVal, val) {
+	                if (key === "required") {
+	                    if (val === "") {
+	                        return false;
+	                    }
+	                    return true;
+	                } else if (key === "minlength") {
+	                    if (val.length < keyVal) {
+	                        return false;
+	                    }
+	                    return true;
+	                } else if (key === "maxlength") {
+	                    if (val.length > keyVal) {
+	                        return false;
+	                    }
+	                    return true;
+	                } else if (key === "regex") {
+	                    var reg = new RegExp(keyVal);
+	                    if (reg.test(val)) {
+	                        return true;
+	                    }
+	                    return false;
+	                }
+	            };
+
+	            for (var key in requirements) {
+	                if (requirements.hasOwnProperty(key)) {
+	                    result[key] = checkRequire(key, requirements[key], val);
+	                }
+	            }
+	            console.log(result);
+
+	            return result;
+	        }
+	    }, {
+	        key: "sendFormData",
+	        value: function sendFormData() {
+	            console.log("LoginForm : Send Form");
+	            var formData = Object.assign({}, this.state.inputContent);
+	            var xmlhttp = new XMLHttpRequest();
+	            var _this = this;
+
+	            xmlhttp.onreadystatechange = function () {
+	                if (xmlhttp.readyState === 4) {
+	                    var response = JSON.parse(xmlhttp.responseText);
+	                    if (xmlhttp.status === 200 && response.status === 'OK') {
+	                        console.log("Gui thong tin thanh cong");
+	                        var newState = Object.assign({}, _this.state, { serverMsg: "gửi thông tin thành công" });
+	                        _this.setState(newState);
+	                        setTimeout(function () {
+	                            $('div#inputform').unblock();
+	                        }, 1000);
+	                    } else {
+	                        var newState = Object.assign({}, _this.state, { serverMsg: "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại" });
+	                        _this.setState(newState);
+	                    }
+	                }
+	            };
+	            xmlhttp.open('POST', '/customers/', true);
+	            xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	            xmlhttp.send(this.requestBuildQueryString(formData));
+	        }
+	    }, {
+	        key: "requestBuildQueryString",
+	        value: function requestBuildQueryString(params) {
+	            var queryString = [];
+	            for (var property in params) {
+	                if (params.hasOwnProperty(property)) {
+	                    queryString.push(encodeURIComponent(property) + '=' + encodeURIComponent(params[property]));
+	                }
+	            }return queryString.join('&');
+	        }
+	    }, {
+	        key: "handleSubmit",
+	        value: function handleSubmit() {
+	            var result = true;
+	            for (var key in this.state.childValidated) {
+	                if (this.state.childValidated.hasOwnProperty(key)) {
+	                    result = result && this.state.childValidated[key];
+	                }
+	            }
+	            console.log("result ", result);
+	            var newState = Object.assign({}, this.state, { serverMsg: "Đang xử lý ... " });
+
+	            if (result === true) {
+	                this.setState(newState, this.sendFormData());
+	            } else {
+	                newState = Object.assign({}, this.state, { serverMsg: "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3" });
+	                this.setState(newState);
+
+	                //console.log(document.cookie);
+	                //alert("Vui lòng điền thông tin yêu cầu.");
+	                //window.location = "/#services";
+	            }
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	            var imgUrl = 'url(' + this.props.imgSrc + ')';
@@ -22013,6 +22199,7 @@
 	                backgroundImage: imgUrl,
 	                backgroundSize: 'cover'
 	            };
+	            var _this = this;
 	            return _react2.default.createElement(
 	                "div",
 	                { id: this.props.idType, className: "modal fade" },
@@ -22062,7 +22249,7 @@
 	                                                    _react2.default.createElement(
 	                                                        "div",
 	                                                        { id: "input-ahead" },
-	                                                        _react2.default.createElement("input", { className: "type-ahead form-control", type: "text", placeholder: item.preText, name: item.id })
+	                                                        _react2.default.createElement(Input, { "class": "type-ahead form-control", type: "qg", placeholder: item.preText, name: item.id, checkValidate: _this.checkValidate, updateValidateState: _this.updateValidateState })
 	                                                    )
 	                                                );
 	                                            } else {
@@ -22074,14 +22261,14 @@
 	                                                        null,
 	                                                        item.label
 	                                                    ),
-	                                                    _react2.default.createElement("input", { className: "form-control", type: "text", placeholder: item.preText, name: item.id })
+	                                                    _react2.default.createElement(Input, { "class": "form-control", type: item.id, placeholder: item.preText, name: item.id, checkValidate: _this.checkValidate, updateValidateState: _this.updateValidateState })
 	                                                );
 	                                            }
 	                                        }),
 	                                        _react2.default.createElement(
 	                                            "div",
 	                                            { className: "text-center" },
-	                                            _react2.default.createElement(BtSubmit, { label: "đăng ký", form: "submitform" })
+	                                            _react2.default.createElement(BtSubmit, { label: "đăng ký", form: "submitform", handleSubmit: this.handleSubmit })
 	                                        )
 	                                    )
 	                                )
@@ -22166,7 +22353,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                "button",
-	                { id: "btsubmit", type: "submit", form: this.props.formid, formMethod: "post" },
+	                { id: "btsubmit", type: "button", value: "Submit", onClick: this.props.handleSubmit },
 	                this.props.label
 	            );
 	        }

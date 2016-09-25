@@ -16,7 +16,7 @@ class IndexComponent extends Component{
                 var response = JSON.parse(xmlhttp.responseText);
                 if(xmlhttp.status === 200 && response.status === 'OK') {
                     _this.setState({prevSession : {content : response.session.customerInfo}}); 
-                    console.log("Session Retrieving Notice : familiar Session ", _this.state.prevSession);
+                    console.log("Session Retrieving Notice : familiar Session ", _this.state.prevSession.content);
                 } else if (xmlhttp.status === 200 && response.status === 'NONE') {
                     _this.setState({prevSession : {content : null}});
                     console.log("Session Retrieving Warning : new come Session");
