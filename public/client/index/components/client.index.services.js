@@ -354,6 +354,7 @@ class SubmitForm extends Component {
             state["childValidated"][item.id] = false;
             state["inputContent"][item.id] = "";
         });
+        state.serverMsg = {msgContent: "Vui lòng điền thông tin đăng ký dịch vụ", style : {color : 'green'} };
 
         this.state = state;
         this.rules = {
@@ -438,7 +439,7 @@ class SubmitForm extends Component {
                 var response = JSON.parse(xmlhttp.responseText);
                 if (xmlhttp.status === 200 && response.status === 'OK') {
                     console.log("Gui thong tin thanh cong");
-                    var newState = Object.assign({}, _this.state, {serverMsg : "gửi thông tin thành công"});
+                    var newState = Object.assign({}, _this.state, {serverMsg : {msgContent : "gửi thông tin thành công :)", style : {color : 'green'}}});
                     _this.setState(newState);
                     setTimeout(
                         function() { $('div#inputform').unblock() },
@@ -446,12 +447,12 @@ class SubmitForm extends Component {
                     );
 
                 }else{
-                    var newState = Object.assign({}, _this.state, {serverMsg : "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại"});
+                    var newState = Object.assign({}, _this.state, {serverMsg : {msgContent : "rất tiếc, đã có lỗi xảy ra, xin hãy gửi lại", style: {color: 'red'}}});
                     _this.setState(newState);
                 }
             }  
         };
-        xmlhttp.open('POST', '/customers/', true);
+        xmlhttp.open('POST', '/customers/submit/', true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlhttp.send(this.requestBuildQueryString(formData));
     }
@@ -473,12 +474,12 @@ class SubmitForm extends Component {
             }
         }
         console.log("result ",result);
-        var newState = Object.assign({}, this.state, {serverMsg : "Đang xử lý ... "});
+        var newState = Object.assign({}, this.state, {serverMsg : {msgContent : "Đang xử lý ... ", style :{color : 'blue'}}});
 
         if(result === true){
             this.setState(newState, this.sendFormData()); 
         }else{
-            newState = Object.assign({}, this.state, {serverMsg : "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3"});
+            newState = Object.assign({}, this.state, {serverMsg : {msgContent : "Thông tin bạn điền chưa chính xác, vui lòng bổ sung, cảm ơn <3", style : {color : 'red'}}});
             this.setState(newState);
             
             //console.log(document.cookie);
@@ -526,6 +527,7 @@ class SubmitForm extends Component {
 
                                     
                                         <div className="text-center">
+                                            <p style={this.state.serverMsg.style}>{this.state.serverMsg.msgContent}</p>
                                             <BtSubmit label="đăng ký" form="submitform" handleSubmit={this.handleSubmit}/>
                                         </div>
                                     </form>
