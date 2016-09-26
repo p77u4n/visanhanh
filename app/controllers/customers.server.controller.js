@@ -1,5 +1,5 @@
 var Customer = require('mongoose').model('Customer');
-
+var CustomerOrder = require('mongoose').model('CustomerOrder');
 exports.create = function(req, res ) {
 
     var customer = new Customer(req.body);
@@ -25,3 +25,19 @@ exports.create = function(req, res ) {
         }
     });
 };
+
+
+exports.createOrder = function(req, res) {
+    var customerOrder = new Customer(req.body);
+    console.log("create Order", req.body);
+
+    customerOrder.save(function(err, customer) {
+        if(err) {
+            console.log("Serverlog : create Order error !!!");
+            throw err;
+        } else {
+            res.send({status : 'OK'});
+            console.log("Serverlog : Done add customer order info", req.body);
+        }
+    }); 
+}

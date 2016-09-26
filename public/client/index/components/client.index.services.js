@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import XRegExp from 'xregexp';
 
 class ServiceSection extends Component {
 
@@ -134,7 +135,8 @@ class LoginForm extends Component {
             usrName : {
                 required : true,
                 minlength : 2,
-                regex : "^[a-z ,.'-]+$"
+                //regex : "^[a-z ,.'-]+$"
+                regex : "^(?:[\p{L}\p{Mn}\p{Pd}\']+[\s\p{L}\p{Mn}\p{Pd}\']*)$"
             },
             usrSdt : {
                 required : true,
@@ -194,8 +196,7 @@ class LoginForm extends Component {
                 }
                 return true;
             }else if(key === "regex") {
-                var reg = new RegExp(keyVal);
-                if(reg.test(val)) {
+                if(XRegExp.test(val, keyVal)) {
                     return true;
                 }
                 return false;
@@ -365,7 +366,8 @@ class SubmitForm extends Component {
             qg : {
                 required : true,
                 minlength : 3,
-                regex : "^[a-z ,.'-]+$"
+                //regex : "^[a-z ,.'-]+$"
+                regex : "^(?:[\p{L}\p{Mn}\p{Pd}\']+[\s\p{L}\p{Mn}\p{Pd}\']*)$"
             },
             sl :{
                 required : true,
@@ -409,8 +411,7 @@ class SubmitForm extends Component {
                 }
                 return true;
             }else if(key === "regex") {
-                var reg = new RegExp(keyVal);
-                if(reg.test(val)) {
+                if(XRegExp.test(val, keyVal)) {
                     return true;
                 }
                 return false;
@@ -452,7 +453,7 @@ class SubmitForm extends Component {
                 }
             }  
         };
-        xmlhttp.open('POST', '/customers/submit/', true);
+        xmlhttp.open('POST', '/customers/submitOrder/', true);
         xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlhttp.send(this.requestBuildQueryString(formData));
     }
