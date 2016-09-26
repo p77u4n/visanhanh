@@ -28,7 +28,7 @@ exports.create = function(req, res ) {
 
 
 exports.createOrder = function(req, res) {
-    var customerOrder = new Customer(req.body);
+    var customerOrder = new CustomerOrder(req.body);
     console.log("create Order", req.body);
 
     customerOrder.save(function(err, customer) {

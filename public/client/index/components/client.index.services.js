@@ -136,7 +136,7 @@ class LoginForm extends Component {
                 required : true,
                 minlength : 2,
                 //regex : "^[a-z ,.'-]+$"
-                regex : "^(?:[\p{L}\p{Mn}\p{Pd}\']+[\s\p{L}\p{Mn}\p{Pd}\']*)$"
+                regex :  "(?:[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+[\sa-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*)"
             },
             usrSdt : {
                 required : true,
@@ -196,7 +196,8 @@ class LoginForm extends Component {
                 }
                 return true;
             }else if(key === "regex") {
-                if(XRegExp.test(val, keyVal)) {
+                var regex = new RegExp(keyVal);
+                if(regex.test(val)) {
                     return true;
                 }
                 return false;
@@ -367,7 +368,7 @@ class SubmitForm extends Component {
                 required : true,
                 minlength : 3,
                 //regex : "^[a-z ,.'-]+$"
-                regex : "^(?:[\p{L}\p{Mn}\p{Pd}\']+[\s\p{L}\p{Mn}\p{Pd}\']*)$"
+                regex : "(?:[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+[\sa-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*)"
             },
             sl :{
                 required : true,
@@ -411,7 +412,8 @@ class SubmitForm extends Component {
                 }
                 return true;
             }else if(key === "regex") {
-                if(XRegExp.test(val, keyVal)) {
+                var regex = new RegExp(keyVal)
+                if(regex.test(val)) {
                     return true;
                 }
                 return false;
@@ -514,14 +516,14 @@ class SubmitForm extends Component {
                                                 return (<div className={colType} style={{height :'150px'}}>
                                                             <h3>QUỐC GIA</h3>
                                                             <div id="input-ahead">
-                                                                <Input class="type-ahead form-control" type="qg" placeholder={item.preText} name={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState}/>
+                                                                <Input class="type-ahead form-control" type="qg" placeholder={item.preText} id={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState}/>
                                                                 
                                                             </div>
                                                         </div>);
                                             }else{
                                                 return(<div className={colType} style={{height :'150px'}}>
                                                             <h3>{item.label}</h3>
-                                                            <Input class="form-control" type={item.id} placeholder={item.preText} name={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState}/>
+                                                            <Input class="form-control" type={item.id} placeholder={item.preText} id={item.id} checkValidate={_this.checkValidate} updateValidateState={_this.updateValidateState}/>
                                                         </div>);
                                             }
                                             })}
